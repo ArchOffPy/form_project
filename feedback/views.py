@@ -4,9 +4,10 @@ from django.http import HttpResponseRedirect
 def index(request):
     if request.method == 'POST':
         name = request.POST['name']
-        surname = request.POST['surname']
+        if len(name) == 0:
+            return render(request, 'feedback/feedback.html', context={'error_name': True})
         return HttpResponseRedirect('/done')
-    return render(request, 'feedback/feedback.html')
+    return render(request, 'feedback/feedback.html', context={'error_name': False})
 
 
 def done(request):
